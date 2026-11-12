@@ -3,6 +3,8 @@ document.documentElement.classList.add('js-motion')
 const header = document.querySelector('[data-header]')
 const menuToggle = document.querySelector('[data-menu-toggle]')
 const nav = document.querySelector('.main-nav')
+const friendsMenu = document.querySelector('.friends-menu')
+const friendsToggle = document.querySelector('[data-friends-toggle]')
 const revealItems = document.querySelectorAll('.reveal')
 
 function syncHeader() {
@@ -22,6 +24,23 @@ nav?.querySelectorAll('a').forEach((link) => link.addEventListener('click', () =
   nav.classList.remove('is-open')
   menuToggle?.setAttribute('aria-expanded', 'false')
 }))
+
+friendsToggle?.addEventListener('click', (event) => {
+  event.stopPropagation()
+  const isOpen = friendsMenu.classList.toggle('is-open')
+  friendsToggle.setAttribute('aria-expanded', String(isOpen))
+})
+
+document.addEventListener('click', () => {
+  friendsMenu?.classList.remove('is-open')
+  friendsToggle?.setAttribute('aria-expanded', 'false')
+})
+
+document.addEventListener('keydown', (event) => {
+  if (event.key !== 'Escape') return
+  friendsMenu?.classList.remove('is-open')
+  friendsToggle?.setAttribute('aria-expanded', 'false')
+})
 
 const revealObserver = new IntersectionObserver((entries, observer) => {
   entries.forEach((entry) => {
